@@ -15,7 +15,7 @@ import setMessage from "./actions/setMessage";
 import setPoints from "./actions/setPoints";
 import clearPoints from "./actions/clearPoints";
 import signOut from "./actions/signOut";
-import {logDOM} from "@testing-library/react";
+import Canvas from "./Canvas";
 
 function Main() {
     const dispatch = useDispatch();
@@ -42,7 +42,9 @@ function Main() {
         <div id="page">
 
             <div id="content">
-
+                <div id="canvas-div">
+                    <Canvas/>
+                </div>
                 <div id="input-field">
                     <form>
                         <div>
@@ -80,7 +82,7 @@ function Main() {
                             </ButtonGroup>
                         </div>
                         {message}
-                        <div><Button label="Отправить" onClick={() => {
+                        <div><Button variant={"contained"} onClick={() => {
                             if (typeof Y === 'number' && Y <= 3 && Y >= -3) {
                                 fetch('/api/points', {
                                     method: 'POST', headers: {
@@ -118,7 +120,7 @@ function Main() {
 
 
                 <div id="footer">
-                    <Table id="points_table">
+                    <Table id="points-table">
                         {points.map((point, i) => {
                             if (i === 0) {
                                 return (<TableHead key={i}>

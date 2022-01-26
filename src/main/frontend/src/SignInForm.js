@@ -52,21 +52,22 @@ function SignInForm() {
                         })
                             .then(response => {
                                 if (response.ok) {
-                                    localStorage.setItem("user", userCredentials.login);
-                                    localStorage.setItem("password", userCredentials.password);
                                     fetch('/api/points', {
                                         method: 'GET'
                                     })
                                         .then(res => {
                                             if (res.ok) {
-                                                res.json().then(points => dispatch(setPoints(points)));
+                                                res.json().then(data => dispatch(setPoints(data)));
                                             } else dispatch(setMessage("Points loaded successfully"));
                                         })
                                         .catch((error) => {
                                             console.error('Error:', error);
                                         });
+                                    localStorage.setItem("user", userCredentials.login);
+                                    localStorage.setItem("password", userCredentials.password);
                                     dispatch(signIn());
-                                } else response.text().then(text => dispatch(setMessage(text)))
+                                    dispatch(setMessage("Signed in successfully"));
+                                }
                             })
                             .catch((error) => {
                                 console.error('Error:', error);

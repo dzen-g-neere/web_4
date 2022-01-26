@@ -45,15 +45,15 @@ public class Point implements Serializable {
     }
 
     private boolean checkTriangle(double x, double y, double r) {
-        return ((x >= 0) && (y >= 0) && (y <= - 2 * x + r));
+        return (x/2 <= (r/2 + y) && x >= 0 && y <= 0);
     }
 
     private boolean checkRectangle(double x, double y, double r) {
-        return ((x >= 0) && (y <= 0) && (x <= r) && (y >= -r / 2));
+        return ((x >= 0) && (y >= 0) && (x <= r / 2) && (y <= r));
     }
 
     private boolean checkCircle(double x, double y, double r) {
-        return ((x <= 0) && (y <= 0) && (x * x + y * y <= r / 2 * r / 2));
+        return ((x <= 0) && (y >= 0) && (x * x + y * y <= r * r));
     }
 
     private boolean checkResult(double x, double y, double r) {

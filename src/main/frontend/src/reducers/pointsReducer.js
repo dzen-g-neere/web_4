@@ -6,7 +6,8 @@ const pointsReducer = (state = [{
     result: "Result"
 }], action) => {
     switch (action.type) {
-        case "SET_POINTS":
+        case "SET_POINTS": {
+            if (action.points !== undefined && action.points !== null)
             return [{
                 x: "X",
                 y: "Y",
@@ -14,6 +15,14 @@ const pointsReducer = (state = [{
                 time: "Time",
                 result: "Result"
             }].concat(action.points);
+            else return ([{
+                x: "X",
+                y: "Y",
+                r: "R",
+                time: "Time",
+                result: "Result"
+            }])
+        }
         default:
             return state;
     }
