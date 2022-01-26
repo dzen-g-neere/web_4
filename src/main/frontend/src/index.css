@@ -70,15 +70,18 @@ h1 {
 #input-field {
     margin: auto;
     height: fit-content;
-    width: fit-content;
     background-color: white;
     border-radius: 10px;
     border: 6px groove #1e51a4;
 }
 
+th, td {
+    border-bottom: 1px solid #ddd;
+}
+
 #footer {
     margin: auto;
-    min-height: calc(100vh - 600px);
+    min-height: calc(100vh - 500px);
     min-width: fit-content;
     width: fit-content;
     background-color: white;
@@ -86,37 +89,36 @@ h1 {
     border: 2mm solid #1e51a4;
 }
 
-#points-table {
-    width: fit-content;
-}
-
-th, td {
-    border-bottom: 1px solid #ddd;
-}
-
-
-
 @media (min-width: 1041px) {
-    #footer {
-        margin: auto;
-        min-height: calc(100vh - 700px);
-        min-width: fit-content;
-        width: fit-content;
-        background-color: white;
-        border-radius: 8px;
-        border: 2mm solid #1e51a4;
+    #points-table {
+        width: 60vw;
+        font-family: serif;
+        font-size: small;
+    }
+    #input-field {
+        width: 60vw;
+    }
+}
+
+@media (max-width: 1040px) and (min-width: 713px) {
+    #points-table {
+        width: 75vh;
+        font-family: serif;
+        font-size: medium;
+    }
+    #input-field {
+        width: 75vw;
     }
 }
 
 @media (max-width: 712px) {
-    #footer {
-        margin: auto;
-        min-height: calc(100vh - 510px);
-        min-width: fit-content;
-        width: fit-content;
-        background-color: white;
-        border-radius: 8px;
-        border: 2mm solid #1e51a4;
+    #points-table {
+        width: 85vw;
+        font-family: serif;
+        font-size: medium;
+    }
+    #input-field {
+        width: 85vw;
     }
 }
 

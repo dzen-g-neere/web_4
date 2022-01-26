@@ -44,7 +44,7 @@ public class UsersController {
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (AuthenticationException authenticationException) {
             System.out.println("Authentication attempt from non-existent user");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect login or password", HttpStatus.BAD_REQUEST);
         }
     }
 
