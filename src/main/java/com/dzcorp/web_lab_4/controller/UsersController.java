@@ -31,12 +31,12 @@ public class UsersController {
     public ResponseEntity<?> login(@RequestBody User user) {
         try {
             if (user.getUsername() == null || user.getUsername().equals("") || user.getPassword() == null || user.getPassword().equals("")) {
-                return new ResponseEntity("Login and password can not be empty", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Login and password can not be empty", HttpStatus.BAD_REQUEST);
             }
             User userFromDB = usersRepository.findByUsername(user.getUsername());
             if (userFromDB == null) {
                 System.out.println("User " + user.getUsername() + " was not found");
-                return new ResponseEntity<>("User " + user.getUsername() + " was not found", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("User was not found", HttpStatus.BAD_REQUEST);
             }
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
@@ -53,16 +53,16 @@ public class UsersController {
         User userFromDB = usersRepository.findByUsername(user.getUsername());
         if (userFromDB != null) {
             System.out.println("User " + user.getUsername() + " is already exists");
-            return new ResponseEntity("User " + user.getUsername() + " is already exists" , HttpStatus.CONFLICT);
+            return new ResponseEntity<>("User is already exists" , HttpStatus.BAD_REQUEST);
         }
         if (user.getUsername().trim().equals("") || user.getPassword().trim().equals("")) {
-            return new ResponseEntity("Login and password can not be empty", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Login and password can not be empty", HttpStatus.BAD_REQUEST);
         }
         User newUser = new User();
         newUser.setUsername(user.getUsername().trim());
         newUser.setPassword(passwordEncoder.encode(user.getPassword().trim()));
         usersRepository.save(newUser);
-        return new ResponseEntity("User " + user.getUsername() + " created successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User created successfully", HttpStatus.OK);
     }
 
 }

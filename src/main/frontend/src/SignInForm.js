@@ -1,11 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "@mui/material";
 import {TextField} from "@mui/material";
-import needToSignUp from "./actions/needToSignUp";
-import setUserCredentials from "./actions/setUserCredentials";
-import signIn from "./actions/signIn";
-import setMessage from "./actions/setMessage";
-import setPoints from "./actions/setPoints";
+import needToSignUp from "./actions/callbacks/needToSignUp";
+import setUserCredentials from "./actions/callbacks/setUserCredentials";
+import signIn from "./actions/callbacks/signIn";
+import setMessage from "./actions/callbacks/setMessage";
+import setPoints from "./actions/callbacks/setPoints";
+import downloadPoints from "./actions/requests/downloadPoints";
 
 function SignInForm() {
     const dispatch = useDispatch();
@@ -52,13 +53,11 @@ function SignInForm() {
                         })
                             .then(response => {
                                 if (response.ok) {
-                                    fetch('/api/points', {
-                                        method: 'GET'
-                                    })
+                                    downloadPoints()
                                         .then(res => {
                                             if (res.ok) {
                                                 res.json().then(data => dispatch(setPoints(data)));
-                                            } else dispatch(setMessage("Points loaded successfully"));
+                                            } else res.text().then(text => dispatch(setMessage(text)));
                                         })
                                         .catch((error) => {
                                             console.error('Error:', error);
@@ -66,8 +65,8 @@ function SignInForm() {
                                     localStorage.setItem("user", userCredentials.login);
                                     localStorage.setItem("password", userCredentials.password);
                                     dispatch(signIn());
-                                    dispatch(setMessage("Signed in successfully"));
-                                }
+                                    dispatch(setMessage());
+                                } else response.text().then(text => dispatch(setMessage(text)))
                             })
                             .catch((error) => {
                                 console.error('Error:', error);

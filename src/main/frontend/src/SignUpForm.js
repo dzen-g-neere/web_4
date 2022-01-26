@@ -1,9 +1,9 @@
 import {useSelector, useDispatch} from "react-redux";
 import {Button, TextField} from "@mui/material";
 
-import setUserCredentials from "./actions/setUserCredentials";
-import setMessage from "./actions/setMessage";
-import needToSignUp from "./actions/needToSignUp";
+import setUserCredentials from "./actions/callbacks/setUserCredentials";
+import setMessage from "./actions/callbacks/setMessage";
+import needToSignUp from "./actions/callbacks/needToSignUp";
 
 function SignUpForm() {
     const dispatch = useDispatch();
@@ -45,7 +45,10 @@ function SignUpForm() {
                             headers: {
                                 'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify({username: userCredentials.login, password: userCredentials.password})
+                            body: JSON.stringify({
+                                username: userCredentials.login,
+                                password: userCredentials.password
+                            })
                         })
                             .then(response => {
                                 if (response.ok) {

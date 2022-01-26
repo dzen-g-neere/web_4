@@ -8,14 +8,15 @@ import {TableHead} from "@mui/material";
 import {TableRow} from "@mui/material";
 
 import {useDispatch, useSelector} from "react-redux";
-import setX from "./actions/setX";
-import setY from "./actions/setY";
-import setR from "./actions/setR";
-import setMessage from "./actions/setMessage";
-import setPoints from "./actions/setPoints";
-import clearPoints from "./actions/clearPoints";
-import signOut from "./actions/signOut";
+import setX from "./actions/callbacks/setX";
+import setY from "./actions/callbacks/setY";
+import setR from "./actions/callbacks/setR";
+import setMessage from "./actions/callbacks/setMessage";
+import setPoints from "./actions/callbacks/setPoints";
+import clearPoints from "./actions/callbacks/clearPoints";
+import signOut from "./actions/callbacks/signOut";
 import Canvas from "./Canvas";
+import downloadPoints from "./actions/requests/downloadPoints";
 
 function Main() {
     const dispatch = useDispatch();
@@ -95,9 +96,7 @@ function Main() {
                                 })
                                     .then(response => {
                                         if (response.ok) {
-                                            fetch('/api/points', {
-                                                method: 'GET'
-                                            })
+                                            downloadPoints()
                                                 .then(res => {
                                                     if (res.ok) {
                                                         res.json().then(points => dispatch(setPoints(points)));
@@ -107,6 +106,7 @@ function Main() {
                                                 .catch((error) => {
                                                     console.error('Error:', error);
                                                 });
+                                            dispatch(setMessage());
                                         } else response.text().then(text => dispatch(setMessage(text)));
                                     })
                                     .catch((error) => {

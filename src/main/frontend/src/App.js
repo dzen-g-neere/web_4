@@ -2,9 +2,10 @@ import {useDispatch, useSelector} from "react-redux";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm"
 import Main from "./Main";
-import signIn from "./actions/signIn";
-import setPoints from "./actions/setPoints";
-import setMessage from "./actions/setMessage";
+import signIn from "./actions/callbacks/signIn";
+import setPoints from "./actions/callbacks/setPoints";
+import setMessage from "./actions/callbacks/setMessage";
+import downloadPoints from "./actions/requests/downloadPoints";
 
 function App() {
     const isSignedIn = useSelector(state => state.isSignedIn);
@@ -32,14 +33,11 @@ function App() {
             .then(response => {
                 if (response.ok) {
                     dispatch(signIn());
-                    dispatch(setMessage("Signed in successfully"));
-                    fetch('/api/points', {
-                        method: 'GET'
-                    })
+                    downloadPoints()
                         .then(res => {
                             if (res.ok) {
                                 res.json().then(points => dispatch(setPoints(points)));
-                            } else dispatch(setMessage("Points loaded successfully"));
+                            } else dispatch(setMessage("Server might be unavailable"));
                         })
                         .catch((error) => {
                             console.error('Error:', error);

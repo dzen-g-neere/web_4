@@ -1,7 +1,8 @@
 import React, {useRef, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import setPoints from "./actions/setPoints";
-import setMessage from "./actions/setMessage";
+import setPoints from "./actions/callbacks/setPoints";
+import setMessage from "./actions/callbacks/setMessage";
+import downloadPoints from "./actions/requests/downloadPoints";
 
 const Canvas = props => {
     const dispatch = useDispatch();
@@ -32,9 +33,7 @@ const Canvas = props => {
             })
                 .then(response => {
                     if (response.ok) {
-                        fetch('/api/points', {
-                            method: 'GET'
-                        })
+                        downloadPoints()
                             .then(res => {
                                 if (res.ok) {
                                     res.json().then(points => dispatch(setPoints(points)));
@@ -43,12 +42,13 @@ const Canvas = props => {
                             .catch((error) => {
                                 console.error('Error:', error);
                             });
+                        dispatch(setMessage());
                     } else response.text().then(text => dispatch(setMessage(text)));
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        }
+        } else dispatch(setMessage("X[-4, 4], Y[-3, 3], R[-4, 4]"));
     }
 
     function isLegal(x, y, r) {
