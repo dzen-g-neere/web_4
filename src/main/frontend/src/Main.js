@@ -69,7 +69,7 @@ function Main() {
                             }}/>
                         </div>
                         <div>
-                            Параметр R: {R}<br/>
+                            Radius: {R}<br/>
                             <ButtonGroup variant={"outlined"}>
                                 <Button onClick={() => dispatch(setR(-4))}>-4</Button>
                                 <Button onClick={() => dispatch(setR(-3))}>-3</Button>
