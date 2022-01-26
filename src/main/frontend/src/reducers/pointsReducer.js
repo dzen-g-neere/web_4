@@ -6,6 +6,9 @@ const pointsReducer = (state = [{
     result: "Result"
 }], action) => {
     switch (action.type) {
+        case "ADD_POINT":
+            state.push(action.points);
+            return [...state];
         case "SET_POINTS": {
             if (action.points !== undefined && action.points !== null)
             return [{

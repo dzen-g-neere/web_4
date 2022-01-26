@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import setPoints from "./actions/callbacks/setPoints";
 import setMessage from "./actions/callbacks/setMessage";
 import downloadPoints from "./actions/requests/downloadPoints";
+import addPoint from "./actions/callbacks/addPoint";
 
 const Canvas = props => {
     const dispatch = useDispatch();
@@ -33,15 +34,7 @@ const Canvas = props => {
             })
                 .then(response => {
                     if (response.ok) {
-                        downloadPoints()
-                            .then(res => {
-                                if (res.ok) {
-                                    res.json().then(points => dispatch(setPoints(points)));
-                                } else res.text().then(text => dispatch(setMessage(text)))
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
+                        response.json().then(point => dispatch(addPoint(point)));
                         dispatch(setMessage());
                     } else response.text().then(text => dispatch(setMessage(text)));
                 })

@@ -17,6 +17,7 @@ import clearPoints from "./actions/callbacks/clearPoints";
 import signOut from "./actions/callbacks/signOut";
 import Canvas from "./Canvas";
 import downloadPoints from "./actions/requests/downloadPoints";
+import addPoint from "./actions/callbacks/addPoint";
 
 function Main() {
     const dispatch = useDispatch();
@@ -96,16 +97,8 @@ function Main() {
                                 })
                                     .then(response => {
                                         if (response.ok) {
-                                            downloadPoints()
-                                                .then(res => {
-                                                    if (res.ok) {
-                                                        res.json().then(points => dispatch(setPoints(points)));
-                                                        console.log(points);
-                                                    } else res.text().then(text => dispatch(setMessage(text)))
-                                                })
-                                                .catch((error) => {
-                                                    console.error('Error:', error);
-                                                });
+                                            response.json().then(point => dispatch(addPoint(point)));
+                                            console.log(points);
                                             dispatch(setMessage());
                                         } else response.text().then(text => dispatch(setMessage(text)));
                                     })
